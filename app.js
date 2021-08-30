@@ -25,6 +25,6 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+app.listen(port, 'https://ktu-notifier.herokuapp.com/', function() {
+  console.log("... port %d in %s mode", app.address().port, app.settings.env);
 });
