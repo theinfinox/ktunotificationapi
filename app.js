@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port =(process.env.PORT || 8080);
+const port =(process.env.PORT || 3000);
 const scrapper = require('./scrapper');
 const fs = require('fs');
 const dataPath = 'notifications.json';
@@ -25,5 +25,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-app.listen(3000, '0.0.0.0');
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
