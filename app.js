@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(port, 'https://ktu-notifier.herokuapp.com/', function() {
-  console.log("... port %d in %s mode", app.address().port, app.settings.env);
+
+app.listen(port, () => {
+    console.log(`app listening at http://localhost:${port}`)
 });
