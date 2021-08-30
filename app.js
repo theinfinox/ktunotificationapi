@@ -26,6 +26,4 @@ app.get('/', (req, res) => {
 
 
 
-app.listen(port, () => {
-    console.log(`app listening at http://localhost:${port}`)
-});
+app.listen(3000, '0.0.0.0');
