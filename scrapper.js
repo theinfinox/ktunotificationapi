@@ -5,7 +5,7 @@ const jsonfile= require('./notifications.json');
 
 const ktu_url = "https://www.ktu.edu.in/eu/core/announcements.htm";
 let is_ktusite_online = null;
-let limit = 5  // fetch last 5 notifications announcement page 
+let limit = 10  // fetch last 10 notifications announcement page 
 module.exports = {
   fetch: function () {
 
@@ -32,14 +32,15 @@ module.exports = {
           for (let k = 0; k < limit; k++) { 
     
             const links = [];
-    
+            let description;
             const notificationTime = JSON.stringify(tablesAsJson[0][k][0]).replace(/\\t|\\n|<p>|  /g, '');
             const notificationData = JSON.stringify(tablesAsJson[0][k][1]).replace(/\\t|\\n|<p>|  /g, '');
     
     
             let date = getFromBetween.get(notificationTime, "<strong>", "</strong>")[0];
-            let title = getFromBetween.get(notificationData, "<b>", "</b>")[0];
-            let description = getFromBetween.get(notificationData, "</b>", "<!-- </a> -->")[0].replace(/<\/p>|<br>/g, ' ');
+            let title = getFromBetween.get(notificationData, "<b>", "</b>")[0].replace(/&amp;/g, '&');
+            let desc = getFromBetween.get(notificationData, "</b>", "<!-- </a> -->")[0];
+            if (desc) description = desc.replace(/<\/p>|<br>/g, ' ')
             let link = getFromBetween.get(notificationData, "<a href=\\\"", "</a>");
     
     
@@ -47,7 +48,7 @@ module.exports = {
             link.forEach(element => {
               try {
     
-                url = "https://ktu.edu.in/eu" + getFromBetween.get(element, "/eu", "\\\"")[0].replace(/&amp;/g, '&');
+                url = "https://ktu.edu.in/eu" + getFromBetween.get(element, "/eu", "\\\"")[0].replace(/&amp;/g, '&').replace(/ /g,"%20");
                 url_title = "" + getFromBetween.get(element, "><b>", "</b>");
                 const urlData = {
                   url_title,
